@@ -21,11 +21,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFFF9F9F9),
       appBar: _appBar(),
-      body: Column(
-        children: <Widget>[
-          _etiquetas(),
-          _historias()
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _etiquetas(),
+            _historias(), 
+            Divider(
+              color: Colors.grey, 
+              height: 0,
+              thickness: 0.5,
+              ),
+              _posts(),
+          ],
+        ),
       )
     );
   }
@@ -144,5 +152,100 @@ Widget _etiquetas(){
       ],
     );
   }
+
+  Widget _posts(){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 500,
+      child: ListView.builder(
+        itemCount: 50,
+        itemBuilder: (context, i){
+          return _crearPost();
+        }),
+    );
+  }
+
+  Widget _crearPost(){
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Row(
+              children: <Widget> [
+                  Container(
+          child: Container(
+            padding: EdgeInsets.only(top: 12, 
+            left: 18,
+            bottom: 12,
+            right: 12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image(
+               image: NetworkImage(
+                 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/120.jpg'
+               ),
+               height: 45,
+               width: 45,
+               fit: BoxFit.cover),
+            ),
+          ),
+        ),
+          Text('Marla',
+          style: TextStyle(fontWeight: FontWeight.bold,
+          fontSize: 16)
+          ),
+          Expanded(child: SizedBox()),
+          IconButton(
+            onPressed: (){}, 
+            icon: Icon(Icons.more_horiz),
+            iconSize: 30,
+            ),
+              ],
+            ),
+          ),
+          FadeInImage(
+            placeholder: AssetImage('assets/img/loading.gif'), 
+            image: NetworkImage('http://placeimg.com/640/480/cats')),
+          Container(
+            padding: EdgeInsets.only(top: 5, left: 7, right: 7, bottom: 1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: <Widget>[
+                IconButton(
+                onPressed: (){}, 
+                icon: Image(
+                  image: AssetImage('assets/img/heart.png'),
+                  width: 30),
+                ),
+                IconButton(
+                onPressed: (){}, 
+                icon: Image(
+                  image: AssetImage('assets/img/comment.png'),
+                  width: 30),
+                ),
+                IconButton(
+                onPressed: (){}, 
+                icon: Image(
+                  image: AssetImage('assets/img/send.png'),
+                  width: 30),
+                ),
+                  ],
+                ),
+                 IconButton(
+                onPressed: (){}, 
+                icon: Image(
+                  image: AssetImage('assets/img/save_o.png'),
+                  width: 30),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
 }
 
