@@ -3,8 +3,18 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instagram_clone/models/stories_model.dart';
+import 'package:instagram_clone/providers/stories_provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  StoriesProvider storiesProvider = new StoriesProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +29,7 @@ class HomePage extends StatelessWidget {
       )
     );
   }
+
  PreferredSizeWidget _appBar() {
    return AppBar(
      bottom: PreferredSize(
@@ -61,6 +72,7 @@ class HomePage extends StatelessWidget {
         ],
    );
   }
+
 Widget _etiquetas(){
   return Container(
     margin: EdgeInsets.only(top: 5, left: 15, right: 15),
@@ -91,18 +103,14 @@ Widget _etiquetas(){
       child: ListView(
         scrollDirection: Axis.horizontal,
         shrinkWrap: false,
-        children: <Widget>[
-          _crearHistoria(Colors.blue),
-          _crearHistoria(Colors.pink),
-          _crearHistoria(Colors.blue),
-          _crearHistoria(Colors.pink),
-          _crearHistoria(Colors.blue),
-        ],
+        children: storiesProvider.getStories().map((storie){
+          return _crearHistoria(storie);
+        }).toList(),
       ),
     );
   }
 
-  Widget _crearHistoria(Color color){
+  Widget _crearHistoria(Storie storie){
     return Column(
       children: <Widget>[
         Container(
@@ -119,7 +127,9 @@ Widget _etiquetas(){
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Image(
-               image: NetworkImage('https://us.123rf.com/450wm/domenicogelermo/domenicogelermo1909/domenicogelermo190900265/129438391-retrato-frontal-de-la-mujer-con-rostro-de-belleza-aislado.jpg?ver=6'),
+               image: NetworkImage(
+                 storie.photo
+               ),
                height: 65,
                width: 65,
                fit: BoxFit.cover),
@@ -127,8 +137,9 @@ Widget _etiquetas(){
           ),
         ),
          SizedBox(height: 6),
-         Text('Marla',
-         style: TextStyle(fontSize: 13)
+         Text(
+          storie.name,
+          style: TextStyle(fontSize: 13)
          )
       ],
     );
