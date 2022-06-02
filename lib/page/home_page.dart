@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -9,7 +11,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFF9F9F9),
       appBar: _appBar(),
-      body: _etiquetas(),
+      body: Column(
+        children: <Widget>[
+          _etiquetas(),
+          _historias()
+        ],
+      )
     );
   }
  PreferredSizeWidget _appBar() {
@@ -75,5 +82,56 @@ Widget _etiquetas(){
     ),
   );
 }
+
+  Widget _historias(){
+    return Container(
+      height: 105,
+      width: double.infinity,
+      margin: EdgeInsets.only(top: 10, left: 5),
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: false,
+        children: <Widget>[
+          _crearHistoria(Colors.blue),
+          _crearHistoria(Colors.pink),
+          _crearHistoria(Colors.blue),
+          _crearHistoria(Colors.pink),
+          _crearHistoria(Colors.blue),
+        ],
+      ),
+    );
+  }
+
+  Widget _crearHistoria(Color color){
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(
+              width: 3,
+              color: Color(0xFF8E44AD)
+            ),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(2),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image(
+               image: NetworkImage('https://us.123rf.com/450wm/domenicogelermo/domenicogelermo1909/domenicogelermo190900265/129438391-retrato-frontal-de-la-mujer-con-rostro-de-belleza-aislado.jpg?ver=6'),
+               height: 65,
+               width: 65,
+               fit: BoxFit.cover),
+            ),
+          ),
+        ),
+         SizedBox(height: 6),
+         Text('Marla',
+         style: TextStyle(fontSize: 13)
+         )
+      ],
+    );
+  }
 }
 
