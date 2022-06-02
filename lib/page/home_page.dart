@@ -165,6 +165,7 @@ Widget _etiquetas(){
     );
   }
 
+  
   Widget _crearPost(){
     return Container(
       child: Column(
@@ -239,6 +240,58 @@ Widget _etiquetas(){
                   image: AssetImage('assets/img/save_o.png'),
                   width: 30),
                 ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 17, right: 17, bottom: 10),
+            child: Row(
+              children: [
+                Text('Likes By Marla, Gigi and 124 others')
+              ],
+            ),
+          ),
+          Container(
+
+            width: double.infinity,
+            padding: EdgeInsets.only(
+              left: 17,
+              right: 17,
+              bottom: 10),
+            child: Column(
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Marla ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                        )
+                      ),
+                      TextSpan(
+                        text: 'Eos eos quis quidem deleniti eum tempora fugit et. Incidunt id sint magni adipisci. Sed quisquam nobis mollitia et velit commodi nesciunt. Sit blanditiis cumque sit sunt provident commodi deserunt placeat. Voluptatem blanditiis et deserunt fugiat perferendis et quo est maxime. Autem aut officiis est ullam explicabo.',
+                        style: TextStyle(
+                          color: Colors.black
+                        )
+                      )
+                    ]
+                  )
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.symmetric(
+                      vertical:10),
+                    child: Text(
+                      'Mayo 24',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18
+                        ),
+                    ),
+                  )
               ],
             ),
           )
