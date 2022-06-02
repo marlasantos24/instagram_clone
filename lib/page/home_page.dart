@@ -156,8 +156,9 @@ Widget _etiquetas(){
   Widget _posts(){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 500,
       child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemCount: 50,
         itemBuilder: (context, i){
           return _crearPost();
