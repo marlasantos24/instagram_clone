@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   StoriesProvider storiesProvider = new StoriesProvider();
   PostProvider postProvider = new PostProvider();
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,8 @@ class _HomePageState extends State<HomePage> {
               _posts(),
           ],
         ),
-      )
+      ),
+      bottomNavigationBar: _tapBar(),
     );
   }
 
@@ -324,6 +326,50 @@ Widget _etiquetas(){
           )
         ],
       ),
+    );
+  }
+
+  Widget _tapBar(){
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: Colors.black38, width: 0.75))
+      ),
+      child: BottomNavigationBar(
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        currentIndex: currentPage,
+        selectedItemColor: Colors.black,
+        iconSize: 28,
+        elevation: 0,
+        onTap: (i){
+          setState(() {
+            currentPage = i;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(AntDesign.home),
+            label: 'Home',
+            ),
+          BottomNavigationBarItem(
+            icon: Icon(Feather.search),
+            label: 'Buscar',
+            ),
+            BottomNavigationBarItem(
+            icon: Icon(Feather.plus_square),
+            label: 'Cargar',
+            ),
+          BottomNavigationBarItem(
+            icon: Icon(Feather.heart),
+            label: 'Likes',
+            ),
+            BottomNavigationBarItem(
+            icon: Icon(Feather.user),
+            label: 'Cuenta',
+            ),
+        ]
+        ),
     );
   }
 
