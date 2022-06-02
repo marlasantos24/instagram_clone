@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instagram_clone/models/post_model.dart';
 import 'package:instagram_clone/models/stories_model.dart';
+import 'package:instagram_clone/providers/posts_provider.dart';
 import 'package:instagram_clone/providers/stories_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   StoriesProvider storiesProvider = new StoriesProvider();
+  PostProvider postProvider = new PostProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -159,15 +162,42 @@ Widget _etiquetas(){
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: 50,
+        itemCount: postProvider.getPosts().length,
         itemBuilder: (context, i){
-          return _crearPost();
+         return _crearPost(postProvider.getPosts()[i]);
         }),
     );
   }
 
   
-  Widget _crearPost(){
+  Widget _crearPost(Post post){
+
+    List <Widget> userLikes = [];
+
+    userLikes.add(Text('Me gusta por '));
+
+    int count = 1;
+    int countUserLikes = post.topLikes.length;
+
+
+    post.topLikes.forEach((name){
+      Widget _temp = Text(
+        count != countUserLikes ? name + ', ':name,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      );
+
+      userLikes.add(_temp);
+      count == countUserLikes ? userLikes.add(Text(' y ')):null;
+      count == countUserLikes ?
+      userLikes.add(Text('${post.likes} otros',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,
+      ))):null;
+
+      count++;
+    });
+
+
+
     return Container(
       child: Column(
         children: <Widget>[
@@ -183,16 +213,14 @@ Widget _etiquetas(){
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Image(
-               image: NetworkImage(
-                 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/120.jpg'
-               ),
+               image: NetworkImage(post.userPhoto),
                height: 45,
                width: 45,
                fit: BoxFit.cover),
             ),
           ),
         ),
-          Text('Marla',
+          Text(post.userName,
           style: TextStyle(fontWeight: FontWeight.bold,
           fontSize: 16)
           ),
@@ -207,7 +235,7 @@ Widget _etiquetas(){
           ),
           FadeInImage(
             placeholder: AssetImage('assets/img/loading.gif'), 
-            image: NetworkImage('http://placeimg.com/640/480/cats')),
+            image: NetworkImage(post.postPhoto)),
           Container(
             padding: EdgeInsets.only(top: 5, left: 7, right: 7, bottom: 1),
             child: Row(
@@ -247,9 +275,7 @@ Widget _etiquetas(){
           Container(
             padding: EdgeInsets.only(left: 17, right: 17, bottom: 10),
             child: Row(
-              children: [
-                Text('Likes By Marla, Gigi and 124 others')
-              ],
+              children: userLikes,
             ),
           ),
           Container(
@@ -265,7 +291,7 @@ Widget _etiquetas(){
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Marla ',
+                        text: "${post.userName} ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -273,7 +299,7 @@ Widget _etiquetas(){
                         )
                       ),
                       TextSpan(
-                        text: 'Eos eos quis quidem deleniti eum tempora fugit et. Incidunt id sint magni adipisci. Sed quisquam nobis mollitia et velit commodi nesciunt. Sit blanditiis cumque sit sunt provident commodi deserunt placeat. Voluptatem blanditiis et deserunt fugiat perferendis et quo est maxime. Autem aut officiis est ullam explicabo.',
+                        text: post.caption,
                         style: TextStyle(
                           color: Colors.black
                         )
@@ -286,7 +312,7 @@ Widget _etiquetas(){
                     margin: EdgeInsets.symmetric(
                       vertical:10),
                     child: Text(
-                      'Mayo 24',
+                      post.date,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 18
